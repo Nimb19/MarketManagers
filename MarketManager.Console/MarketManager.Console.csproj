@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CryptoMarketManager.Core\CryptoMarketManager.Core.csproj" />
+		<ProjectReference Include="..\MarketManager.Core\MarketManager.Core.csproj" />
 	</ItemGroup>
 
 </Project>

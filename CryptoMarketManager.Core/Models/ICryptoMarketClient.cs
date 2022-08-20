@@ -11,16 +11,41 @@
 
     public class CryptoClientInfo
     {
-        public class CryptoCoinClientReserve
-        {
+        public string Name { get; init; }
+        public CryptoClientApiName ApiName { get; init; }
+        public CryptoCoinClientReserve[] Reserves { get; init; }
 
+        public CryptoClientInfo(string name, CryptoClientApiName apiName, CryptoCoinClientReserve[] clientReserve)
+        {
+            Name = name;
+            ApiName = apiName;
+            Reserves = clientReserve;
         }
-        public CryptoCoinClientReserve[] ClientReserve { get; }
+    }
+
+    public enum CryptoClientApiName
+    {
+        Binance,
+        OKX,
+        CryptoCom
+    }
+
+    public class CryptoCoinClientReserve
+    {
+        public ICryptoCoin Coin { get; init; }
+        public double Reserve { get; init; }
+
+        public CryptoCoinClientReserve(ICryptoCoin coin, double reserve)
+        {
+            Coin = coin;
+            Reserve = reserve;
+        }
     }
 
     public class CryptoCoinFrameStatistic
     {
-        public ICryptoCoin Coin { get; }
-        public double Price { get; }
+        public ICryptoCoin Coin { get; init; }
+        public DateTimeOffset FrameDate { get; init; }
+        public double Price { get; init; }
     }
 }

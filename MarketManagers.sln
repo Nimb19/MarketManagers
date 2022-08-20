@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoMarketManager.Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoMarketManager.Core", "CryptoMarketManager.Core\CryptoMarketManager.Core.csproj", "{3ECC40A8-8744-454F-957A-E993684B3619}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools", "CommonTools\CommonTools.csproj", "{FDBF1565-3800-408A-9643-3C109A356AAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketManager.Core", "MarketManager.Core\MarketManager.Core.csproj", "{92B11B82-BC42-4325-8A86-0DBD6165AF42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketManager.Console", "MarketManager.Console\MarketManager.Console.csproj", "{B2743AB5-79D4-46F4-9055-9834FB43B147}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{3ECC40A8-8744-454F-957A-E993684B3619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECC40A8-8744-454F-957A-E993684B3619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECC40A8-8744-454F-957A-E993684B3619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDBF1565-3800-408A-9643-3C109A356AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDBF1565-3800-408A-9643-3C109A356AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDBF1565-3800-408A-9643-3C109A356AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDBF1565-3800-408A-9643-3C109A356AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B11B82-BC42-4325-8A86-0DBD6165AF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B11B82-BC42-4325-8A86-0DBD6165AF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B11B82-BC42-4325-8A86-0DBD6165AF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B11B82-BC42-4325-8A86-0DBD6165AF42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
