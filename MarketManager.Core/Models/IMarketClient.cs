@@ -2,30 +2,19 @@
 {
     public interface IMarketClient : IDisposable
     {
-        public StockFrameStats[] GetStatistic(IStock coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo);
-        public bool Buy(IStock stock, double price, int count);
-        public bool Sell(IStock stock, double price, int count);
-
-        public MarketClientInfo GetClientInfo();
-    }
-
-    public class MarketClientInfo
-    {
         public string Name { get; init; }
         public ClientApiName ApiName { get; init; }
-        public StockClientReserve[] Reserves { get; init; }
 
-        public MarketClientInfo(string name, ClientApiName apiName, StockClientReserve[] clientReserve)
-        {
-            Name = name;
-            ApiName = apiName;
-            Reserves = clientReserve;
-        }
+        public bool Buy(IStock stock, int count);
+        public bool Sell(IStock stock, int count);
+
+        public StockClientReserve[] GetReserves();
+        public StockFrameStats[] GetStatistic(IStock coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo);
     }
 
     public enum ClientApiName
     {
-        Tinkkoff,
+        TinkoffInvestApi = 1,
     }
 
     public class StockClientReserve
