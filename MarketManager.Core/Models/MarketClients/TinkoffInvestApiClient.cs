@@ -13,7 +13,7 @@ namespace MarketManager.Core.Models.MarketClients
         {
             ApiName = ClientApiName.TinkoffInvestApi;
 
-            _tincoffApi = ;
+            _tincoffApi = new InvestApiClient();
         }
 
         public bool Buy(IStock stock, int count)

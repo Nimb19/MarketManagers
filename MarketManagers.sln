@@ -5,13 +5,15 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoMarketManager.Console", "CryptoMarketManager.Console\CryptoMarketManager.Console.csproj", "{9868A40F-FB09-48A0-A337-68447357B92B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoMarketManager.Core", "CryptoMarketManager.Core\CryptoMarketManager.Core.csproj", "{3ECC40A8-8744-454F-957A-E993684B3619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoMarketManager.Core", "CryptoMarketManager.Core\CryptoMarketManager.Core.csproj", "{3ECC40A8-8744-454F-957A-E993684B3619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools", "CommonTools\CommonTools.csproj", "{FDBF1565-3800-408A-9643-3C109A356AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTools", "CommonTools\CommonTools.csproj", "{FDBF1565-3800-408A-9643-3C109A356AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketManager.Core", "MarketManager.Core\MarketManager.Core.csproj", "{92B11B82-BC42-4325-8A86-0DBD6165AF42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketManager.Core", "MarketManager.Core\MarketManager.Core.csproj", "{92B11B82-BC42-4325-8A86-0DBD6165AF42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketManager.Console", "MarketManager.Console\MarketManager.Console.csproj", "{B2743AB5-79D4-46F4-9055-9834FB43B147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketManager.Console", "MarketManager.Console\MarketManager.Console.csproj", "{B2743AB5-79D4-46F4-9055-9834FB43B147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketManagers.Tests", "MarketManagers.Tests\MarketManagers.Tests.csproj", "{6B7C2EEE-A92D-4100-8974-E755DD728D3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2743AB5-79D4-46F4-9055-9834FB43B147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7C2EEE-A92D-4100-8974-E755DD728D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7C2EEE-A92D-4100-8974-E755DD728D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7C2EEE-A92D-4100-8974-E755DD728D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7C2EEE-A92D-4100-8974-E755DD728D3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
