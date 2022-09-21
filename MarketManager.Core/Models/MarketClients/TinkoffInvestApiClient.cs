@@ -1,44 +1,48 @@
-﻿using Tinkoff.InvestApi;
+﻿using Microsoft.Extensions.Logging;
+using Tinkoff.InvestApi;
 
-namespace MarketManager.Core.Models.MarketClients
+namespace MarketManager.Core.Models.MarketClients;
+
+public class TinkoffInvestApiClient : IMarketClient
 {
-    public class TinkoffInvestApiClient : IMarketClient
+    private readonly ILogger<TinkoffInvestApiClient> _logger;
+    private InvestApiClient _tincoffApi;
+
+    public string Name { get; init; }
+    public ClientApiName ApiName { get; init; }
+
+    public TinkoffInvestApiClient(ILogger<TinkoffInvestApiClient> logger, InvestApiClient investApiClient)
     {
-        private InvestApiClient _tincoffApi;
+        _logger = logger;
 
-        public string Name { get; init; }
-        public ClientApiName ApiName { get; init; }
+        ApiName = ClientApiName.TinkoffInvestApi;
+        _tincoffApi = investApiClient;
 
-        public TinkoffInvestApiClient(string name)
-        {
-            ApiName = ClientApiName.TinkoffInvestApi;
+        _logger.LogInformation("Инициализация успешна");
+    }
 
-            _tincoffApi = new InvestApiClient();
-        }
+    public bool Buy(IStock stock, int count)
+    {
+        throw new NotImplementedException();
+    }
 
-        public bool Buy(IStock stock, int count)
-        {
-            throw new NotImplementedException();
-        }
+    public bool Sell(IStock stock, int count)
+    {
+        throw new NotImplementedException();
+    }
 
-        public bool Sell(IStock stock, int count)
-        {
-            throw new NotImplementedException();
-        }
+    public StockClientReserve[] GetReserves()
+    {
+        throw new NotImplementedException();
+    }
 
-        public StockClientReserve[] GetReserves()
-        {
-            throw new NotImplementedException();
-        }
+    public StockFrameStats[] GetStatistic(IStock coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo)
+    {
+        throw new NotImplementedException();
+    }
 
-        public StockFrameStats[] GetStatistic(IStock coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }

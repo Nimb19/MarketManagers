@@ -1,8 +1,7 @@
-﻿namespace MarketManager.Core.Models
+﻿namespace MarketManager.Core.Models;
+
+public interface IStock
 {
-    public interface IStock
-    {
-        public string ShortName { get; }
-        public string FullName { get; }
-    }
+    public string ShortName { get; }
+    public string FullName { get; }
 }
