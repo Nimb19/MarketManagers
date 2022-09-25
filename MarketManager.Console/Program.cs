@@ -1,17 +1,11 @@
-﻿using MarketManager.Core.Models.MarketClients;
+﻿using CommonTools.HostBuilderExtensions;
+using MarketManager.Console;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Tinkoff.InvestApi;
-using Tinkoff.InvestApi.V1;
 
-var host = Host.CreateDefaultBuilder(args)
-    .ConfigureAppConfiguration((app) =>
-    {
-        app.AddJsonFile("appsettings.json", true);
-        app.AddJsonFile("appsettings.Development.json", true);
-        app.AddJsonFile("appsettings.Production.json", true);
-    })
+Host.CreateDefaultBuilder(args)
+    .GymDefaultConfigure()
     .ConfigureServices((context, services) =>
     {
         services.AddInvestApiClient((_, settings) =>
@@ -19,21 +13,8 @@ var host = Host.CreateDefaultBuilder(args)
             context.Configuration.Bind(settings);
             settings.AppName = AppDomain.CurrentDomain.FriendlyName;
         });
-        services.AddSingleton<TinkoffInvestApiClient>();
+        services.AddHostedService<MainService>();
     })
-    .Build();
-
-using (var scope = host.Services.CreateScope())
-{
-    var tincoffApi = scope.ServiceProvider.GetRequiredService<InvestApiClient>();
-
-    var accounts = tincoffApi.Users.GetAccounts();
-    var accountId = accounts.Accounts.First().Id;
-
-    var oper = tincoffApi.Operations.GetOperations(new OperationsRequest()
-    {
-        AccountId = accountId,
-    });
-}
-
-host.RunAsync();
+    .Build()
+    .WriteInitializeMessage()
+    .Run();
