@@ -23,15 +23,9 @@ namespace MarketManager.Console
         {
             var accounts = await _investApiClient.Users.GetAccountsAsync();
             var accountId = accounts.Accounts.First().Id;
-
             _logger.LogInformation($"accountId = {accountId}");
 
-            var oper = await _investApiClient.Operations.GetOperationsAsync(new OperationsRequest()
-            {
-                AccountId = accountId,
-            });
-
-            _logger.LogInformation($"oper = {JsonConvert.SerializeObject(oper.Operations, Formatting.Indented)}");
+            var stockInfo = _investApiClient.MarketData.GetLastTrades();
 
             _lifetime.StopApplication();
         }
