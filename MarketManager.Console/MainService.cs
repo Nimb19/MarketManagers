@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Tinkoff.InvestApi;
@@ -21,13 +22,30 @@ namespace MarketManager.Console
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var accounts = await _investApiClient.Users.GetAccountsAsync();
-            var accountId = accounts.Accounts.First().Id;
-            _logger.LogInformation($"accountId = {accountId}");
+            try
+            {
+                var accounts = await _investApiClient.Users.GetAccountsAsync();
+                var accountId = accounts.Accounts.First().Id;
+                _logger.LogInformation($"accountId = {accountId}");
 
-            var stockInfo = _investApiClient.MarketData.GetLastTrades();
+                var candlesInfo = await _investApiClient.MarketData.GetCandlesAsync(new GetCandlesRequest()
+                {
+                    Figi = "bbg007wx14y9",
+                    From = Timestamp.FromDateTime(DateTime.UtcNow.AddMinutes(-5)),
+                    To = Timestamp.FromDateTime(DateTime.UtcNow),
+                    Interval = CandleInterval._1Min,
+                });
 
-            _lifetime.StopApplication();
+                _logger.LogInformation($"candlesInfo = {JsonConvert.SerializeObject(candlesInfo, Formatting.None)}");
+            }
+            catch (Exception exc)
+            {
+                _logger.LogError(exc, $"[FATALERR] ");
+            }
+            finally
+            {
+                _lifetime.StopApplication();
+            }
         }
     }
 }
