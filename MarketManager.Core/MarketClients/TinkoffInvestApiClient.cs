@@ -10,7 +10,7 @@ public class TinkoffInvestApiClient : IMarketClient
     private readonly ILogger<TinkoffInvestApiClient> _logger;
 
     public const string SandboxStockFigi = "BBG004730N88"; // Сбер
-    public const string SandboxCurrencyIsoCode = "RUB";
+    public const string SandboxCurrencyIsoCode = "RUB"; // 643
 
     public string Name { get; init; }
     public ClientApiName ApiName { get; init; }
