@@ -1,5 +1,8 @@
-﻿using CommonTools.HostBuilderExtensions;
+﻿using CommonTools;
+using CommonTools.HostBuilderExtensions;
 using MarketManager.Console;
+using MarketManager.Core.MarketClients;
+using MarketManager.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,12 +11,17 @@ Host.CreateDefaultBuilder(args)
     .GymDefaultConfigure()
     .ConfigureServices((context, services) =>
     {
-        services.AddInvestApiClient((_, settings) =>
+        var opts = context
+            .Configuration.GetSection(ConfigConstants.TinkoffInvestApiClientOptions)
+            .Get<TinkoffInvestApiClientOptions>();
+
+        services.Configure<TinkoffInvestApiClientOptions>((opt) =>
         {
-            context.Configuration.Bind(settings);
-            settings.AppName = AppDomain.CurrentDomain.FriendlyName;
+            PropertyCopyrighter<TinkoffInvestApiClientOptions>.CopyAllProperties(opts, opt);
         });
-        services.AddHostedService<MainService>();
+        services.AddTinkoffClient(opts);
+
+        services.AddHostedService<DebugService>();
     })
     .Build()
     .WriteInitializeMessage()

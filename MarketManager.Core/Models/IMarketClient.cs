@@ -5,6 +5,8 @@ public interface IMarketClient : IDisposable
     public string Name { get; init; }
     public ClientApiName ApiName { get; init; }
 
+    public Task Init();
+
     public bool Buy(IStock stock, int count);
     public bool Sell(IStock stock, int count);
 
