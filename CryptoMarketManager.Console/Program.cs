@@ -8,12 +8,12 @@ Host.CreateDefaultBuilder(args)
     .GymDefaultConfigure()
     .ConfigureServices((context, services) =>
     {
-        services.AddBinance((_, settings) =>
-        {
-            context.Configuration.Bind(settings);
-            settings.AppName = AppDomain.CurrentDomain.FriendlyName;
-        });
-        services.AddHostedService<MainService>();
+        //services.AddBinance((_, settings) =>
+        //{
+        //    context.Configuration.Bind(settings);
+        //    settings.AppName = AppDomain.CurrentDomain.FriendlyName;
+        //});
+        //services.AddHostedService<MainService>();
     })
     .Build()
     .WriteInitializeMessage()
