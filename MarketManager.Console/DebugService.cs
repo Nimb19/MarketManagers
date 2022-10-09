@@ -10,7 +10,6 @@ namespace MarketManager.Console;
 public class DebugService : BackgroundService
 {
     private readonly TinkoffInvestApiClient _client;
-    private string AccoutId = null;
 
     private readonly ILogger<DebugService> _logger;
     private readonly IHostApplicationLifetime _lifetime;
