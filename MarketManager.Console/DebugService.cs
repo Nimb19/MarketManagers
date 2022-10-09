@@ -53,11 +53,23 @@ public class DebugService : BackgroundService
 
     private async Task ReadStreamAndWriteInLoggerAsync(AsyncDuplexStreamingCall<MarketDataRequest, MarketDataResponse> stream, CancellationToken combToken)
     {
-        await foreach (var response in stream.ResponseStream.ReadAllAsync(combToken))
+        try
         {
-            _logger.LogInformation($"response = {JsonConvert.SerializeObject(response, Formatting.Indented)}");
-        }
-        _logger.LogInformation($"readTask END");
+            await foreach (var response in stream.ResponseStream.ReadAllAsync(combToken))
+            {
+                _logger.LogInformation($"Response = {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+            }
+        } catch(RpcException exc)
+        {
+            if (exc.StatusCode == StatusCode.Cancelled)
+            {
+                _logger.LogInformation($"ReadTask Cancelled: {exc.Message}");
+            }
+            else
+            {
+                _logger.LogError($"ReadTask ERROR: {exc}");
+            }
+        }    
     }
 
     private async Task WriteSubscribeCmdAsync(AsyncDuplexStreamingCall<MarketDataRequest, MarketDataResponse> stream, CancellationToken combToken)
