@@ -13,7 +13,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Serilog" Version="2.10.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-		
+
 		<ProjectReference Include="..\CommonTools\CommonTools.csproj" />
 		<ProjectReference Include="..\MarketManager.Core\MarketManager.Core.csproj" />
 	</ItemGroup>

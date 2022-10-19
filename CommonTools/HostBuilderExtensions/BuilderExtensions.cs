@@ -6,48 +6,58 @@ using Serilog;
 using System.Reflection;
 using System.Text;
 
-namespace CommonTools.HostBuilderExtensions
+namespace CommonTools.HostBuilderExtensions;
+
+public static class BuilderExtensions
 {
-    public static class BuilderExtensions
+    public static T GetAndConfigureOptionsFromConfig<T>(this HostBuilderContext context, IServiceCollection services, string section)
+        where T : class
     {
-        public static IHostBuilder GymDefaultConfigure(this IHostBuilder builder)
-        {
-            return builder.ConfigureWithAppSettingsConfigs()
-                .UseConfiguredSerilog();
-        }
+        var opts = context
+                .Configuration.GetSection(section)
+                .Get<T>();
+        services.Configure<T>(
+            (opt) => PropertyCopyrighter<T>.CopyAllProperties(opts, opt));
+        return opts;
+    }
 
-        public static IHostBuilder ConfigureWithAppSettingsConfigs(this IHostBuilder builder)
-        {
-            return builder.ConfigureAppConfiguration((app) =>
-            {
-                app.AddJsonFile("appsettings.json", true);
-                app.AddJsonFile("appsettings.Development.json", true);
-                app.AddJsonFile("appsettings.Production.json", true);
-            });
-        }
+    public static IHostBuilder GymDefaultConfigure(this IHostBuilder builder)
+    {
+        return builder.ConfigureWithAppSettingsConfigs()
+            .UseConfiguredSerilog();
+    }
 
-        public static IHostBuilder UseConfiguredSerilog(this IHostBuilder builder)
+    public static IHostBuilder ConfigureWithAppSettingsConfigs(this IHostBuilder builder)
+    {
+        return builder.ConfigureAppConfiguration((app) =>
         {
-            return builder.UseSerilog((context, loggingConfiguration) =>
-            {
-                loggingConfiguration
-                    .WriteTo.Console()
-                    .WriteTo.File($"{AppDomain.CurrentDomain.FriendlyName}..log"
-                        , rollingInterval: RollingInterval.Day, encoding: Encoding.UTF8);
-            });
-        }
+            app.AddJsonFile("appsettings.json", true);
+            app.AddJsonFile("appsettings.Development.json", true);
+            app.AddJsonFile("appsettings.Production.json", true);
+        });
+    }
 
-        public static IHost WriteInitializeMessage(this IHost host)
+    public static IHostBuilder UseConfiguredSerilog(this IHostBuilder builder)
+    {
+        return builder.UseSerilog((context, loggingConfiguration) =>
         {
-            using (var scope = host.Services.CreateScope())
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<object>>();
+            loggingConfiguration
+                .WriteTo.Console()
+                .WriteTo.File($"{AppDomain.CurrentDomain.FriendlyName}..log"
+                    , rollingInterval: RollingInterval.Day, encoding: Encoding.UTF8);
+        });
+    }
 
-                logger.LogInformation($"{Environment.NewLine}");
-                logger.LogInformation($"Start program");
-                logger.LogInformation($"Version: {Assembly.GetEntryAssembly()?.GetName()?.Version.ToString() ?? "NULL"}");
-            }
-            return host;
+    public static IHost WriteInitializeMessage(this IHost host)
+    {
+        using (var scope = host.Services.CreateScope())
+        {
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<object>>();
+
+            logger.LogInformation($"{Environment.NewLine}");
+            logger.LogInformation($"Start program");
+            logger.LogInformation($"Version: {Assembly.GetEntryAssembly()?.GetName()?.Version.ToString() ?? "NULL"}");
         }
+        return host;
     }
 }

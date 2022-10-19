@@ -9,11 +9,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Binance.Net" Version="8.0.1" />
+		<PackageReference Include="Binance.Net" Version="8.0.1" />
+		
+		<ProjectReference Include="..\CryptoMarketManager.Core\CryptoMarketManager.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CryptoMarketManager.Core\CryptoMarketManager.Core.csproj" />
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
