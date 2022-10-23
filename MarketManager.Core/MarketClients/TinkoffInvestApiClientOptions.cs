@@ -1,4 +1,4 @@
-﻿namespace MarketManager.Core.Models;
+﻿namespace MarketManager.Core.MarketClients;
 
 public class TinkoffInvestApiClientOptions
 {

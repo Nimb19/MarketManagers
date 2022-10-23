@@ -1,7 +1,6 @@
 ﻿using CommonTools.HostBuilderExtensions;
 using MarketManager.Console;
 using MarketManager.Core.MarketClients;
-using MarketManager.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,7 +10,7 @@ Host.CreateDefaultBuilder(args)
     {
         var opts = context.GetAndConfigureOptionsFromConfig<TinkoffInvestApiClientOptions>(services
             , ConfigConstants.TinkoffInvestApiClientOptions);
-        services.AddTinkoffClient(opts);
+        services.AddTinkoffInvestApiClient(opts);
 
         services.AddHostedService<DebugService>();
     })

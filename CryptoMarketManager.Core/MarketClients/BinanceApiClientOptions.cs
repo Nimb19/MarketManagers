@@ -1,4 +1,4 @@
-﻿namespace CryptoMarketManager.Core.Models;
+﻿namespace CryptoMarketManager.Core.MarketClients;
 
 public class BinanceApiClientOptions
 {
