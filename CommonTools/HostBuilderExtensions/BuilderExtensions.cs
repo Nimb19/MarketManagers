@@ -39,13 +39,14 @@ public static class BuilderExtensions
 
     public static IHostBuilder UseConfiguredSerilog(this IHostBuilder builder)
     {
-        return builder.UseSerilog((context, loggingConfiguration) =>
+        builder = builder.UseSerilog((context, loggingConfiguration) =>
         {
             loggingConfiguration
-                .WriteTo.Console()
+                .ReadFrom.Configuration(context.Configuration)
                 .WriteTo.File($"{AppDomain.CurrentDomain.FriendlyName}..log"
                     , rollingInterval: RollingInterval.Day, encoding: Encoding.UTF8);
         });
+        return builder;
     }
 
     public static IHost WriteInitializeMessage(this IHost host)

@@ -13,11 +13,18 @@ public static class BinanceApiClientExtensions
     {
         sc.AddBinance((bo, bso) =>
         {
+            var apiCreds = new ApiCredentials(opts.ApiKey, opts.ApiSecret);
+
             bo.LogLevel = LogLevel.Debug;
-            bo.ApiCredentials = new ApiCredentials(opts.ApiKey, opts.ApiSecret);
+            bo.ApiCredentials = apiCreds;
             bo.SpotApiOptions.RateLimitingBehaviour = RateLimitingBehaviour.Fail;
             if (opts.IsSandboxMode)
                 bo.SpotApiOptions.BaseAddress = BinanceApiAddresses.TestNet.RestClientAddress;
+
+            bso.LogLevel = LogLevel.Debug;
+            bso.ApiCredentials = apiCreds;
+            if (opts.IsSandboxMode)
+                bso.SpotStreamsOptions.BaseAddress = BinanceApiAddresses.TestNet.SocketClientAddress;
         });
 
         sc.AddSingleton<BinanceApiClient>();

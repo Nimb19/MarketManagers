@@ -1,78 +1,66 @@
 ﻿using Binance.Net.Clients;
 using Binance.Net.Interfaces.Clients;
+using Binance.Net.Objects.Models.Spot;
 using CryptoMarketManager.Core.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace CryptoMarketManager.Core.MarketClients;
 
 public class BinanceApiClient : ICryptoMarketClient
 {
-    private readonly ILogger<BinanceApiClient> _logger;
+    private readonly ILogger<BinanceApiClient> m_logger;
 
     public string Name { get; init; }
     public CryptoClientApiName ApiName { get; init; }
 
     public bool IsSandboxMode { get; private set; }
     public BinanceClient SourceApi { get; init; }
+    public BinanceSocketClient SourceSocketApi { get; }
     public IOptions<BinanceApiClientOptions> Options { get; private set; }
     //public MoneyValue Balance { get; private set; }
-    public string AccountId { get; private set; }
+
+    public BinanceAccountInfo BinanceAccountInfo { get; protected set; }
 
     public BinanceApiClient(ILogger<BinanceApiClient> logger
-        , IBinanceClient сlient, IOptions<BinanceApiClientOptions> opts)
+        , IBinanceClient сlient, IBinanceSocketClient socketClient, IOptions<BinanceApiClientOptions> opts)
     {
-        _logger = logger;
+        m_logger = logger;
 
         ApiName = CryptoClientApiName.Binance;
         SourceApi = (сlient as BinanceClient) 
             ?? throw new Exception($"IBinanceClient сlient as BinanceClient = null");
+        SourceSocketApi = (socketClient as BinanceSocketClient)
+            ?? throw new Exception($"IBinanceSocketClient сlient as BinanceSocketClient = null");
 
         Options = opts;
         IsSandboxMode = Options.Value.IsSandboxMode;
 
-        _logger.LogInformation("Контруктор отработал успешно");
+        m_logger.LogInformation("Контруктор отработал успешно");
     }
 
-    public async Task Init()
+    public async Task<bool> Init(CancellationToken ct)
     {
-        //var accsLength = 1;
-        //if (IsSandboxMode)
-        //{
-        //    var accResponse = await SourceApi.Sandbox.OpenSandboxAccountAsync(new OpenSandboxAccountRequest());
-        //    AccountId = accResponse.AccountId;
-
-        //    var balanceResponse = await SourceApi.Sandbox.SandboxPayInAsync(new SandboxPayInRequest()
-        //    {
-        //        AccountId = AccountId,
-        //        Amount = new MoneyValue()
-        //        {
-        //            Currency = SandboxCurrencyIsoCode,
-        //            Units = 100000,
-        //        }
-        //    });
-        //    Balance = balanceResponse.Balance;
-        //}
-        //else
-        //{
-        //    var accounts = await SourceApi.Users.GetAccountsAsync();
-        //    accsLength = accounts.Accounts.Count;
-        //    var facc = accounts.Accounts.First();
-        //    AccountId = facc.Id;
-        //}
-
-        //_logger.LogInformation("Инициализация успешна");
-
-        //_logger.LogInformation($"AccountId = {AccountId} " +
-        //    $"(accounts.Length={accsLength}, IsSandboxMode={IsSandboxMode})");
+        var accInfo = await SourceApi.SpotApi.Account.GetAccountInfoAsync().ConfigureAwait(false);
+        if (accInfo.Success)
+        {
+            m_logger.LogInformation($"[INIT_SUCCESS] {nameof(BinanceApiClient)}");
+            m_logger.LogDebug($"AccountInfo = {JsonConvert.SerializeObject(accInfo.Data, Formatting.Indented)}");
+            BinanceAccountInfo = accInfo.Data ?? throw new Exception($"SourceApi.SpotApi.Account.GetAccountInfoAsync().Data is NULL");
+        }
+        else
+            m_logger.LogError($"SourceApi.SpotApi.Account.GetAccountInfoAsync() is not success. Error: " +
+                $"{Environment.NewLine}{accInfo.Error}");
+        return accInfo.Success;
     }
 
-    public bool Buy(ICryptoCoin coin, double price, double count)
+    public bool Buy(ICryptoCoin coin, double price, double count, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
 
-    public bool Sell(ICryptoCoin coin, double price, double count)
+    public bool Sell(ICryptoCoin coin, double price, double count, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
@@ -82,7 +70,7 @@ public class BinanceApiClient : ICryptoMarketClient
         throw new NotImplementedException();
     }
 
-    public CryptoCoinFrameStatistic[] GetStatistic(ICryptoCoin coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo)
+    public CryptoCoinFrameStatistic[] GetStatistic(ICryptoCoin coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo, CancellationToken ct)
     {
         throw new NotImplementedException();
     }

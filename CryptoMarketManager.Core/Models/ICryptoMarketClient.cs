@@ -2,9 +2,13 @@
 
 public interface ICryptoMarketClient : IDisposable
 {
-    public CryptoCoinFrameStatistic[] GetStatistic(ICryptoCoin coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo);
-    public bool Buy(ICryptoCoin coin, double price, double count);
-    public bool Sell(ICryptoCoin coin, double price, double count);
+    /// <summary>
+    ///     Инициализация соединения, взятие инфы об аккаунте, если sandbox выдача баланса, вывод инфы в лог об инициализации или ошибке.
+    /// </summary>
+    public Task<bool> Init(CancellationToken ct);
+    public CryptoCoinFrameStatistic[] GetStatistic(ICryptoCoin coin, TimeSpan interval, DateTimeOffset dateFrom, DateTimeOffset dateTo, CancellationToken ct);
+    public bool Buy(ICryptoCoin coin, double price, double count, CancellationToken ct);
+    public bool Sell(ICryptoCoin coin, double price, double count, CancellationToken ct);
 
     public CryptoClientInfo GetClientInfo();
 }
